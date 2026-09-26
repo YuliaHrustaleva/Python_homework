@@ -48,6 +48,7 @@ def test_trim_negative(utils, input_str, expected):
 # --- Тесты для метода contains ---
 
 @pytest.mark.parametrize("input_str, symbol", [
+    ("SkyPro", "S"),              # Символ в начале строки
     ("SkyPro", "P"),              # Символ в середине строки
     ("SkyPro", "ro"),             # Подстрока в конце строки
 ])
@@ -56,7 +57,6 @@ def test_contains_positive(utils, input_str, symbol):
 
 
 @pytest.mark.parametrize("input_str, symbol", [
-    ("SkyPro", "S"),              # БАГ: символ на 0-м индексе (index == 0, условие > -1 упадет)
     ("SkyPro", "U"),              # Отсутствующий символ
     ("", "S"),                    # Поиск в пустой строке
 ])
