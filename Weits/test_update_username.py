@@ -3,8 +3,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-
-
 def test_update_username(driver):
     wait = WebDriverWait(driver, 10)
     #Перейти на страницу профиля.

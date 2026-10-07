@@ -29,6 +29,8 @@ def test_session_storage_auth():
     # Обновляем страницу, чтобы cookie применилась
     driver.refresh()
 
+    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".user-profile__username")))
+
     # сохранить текущий url
     url_user1 = driver.current_url
     print(f"url user1: {url_user1}")
@@ -55,6 +57,8 @@ def test_session_storage_auth():
 
     # Обновляем страницу, чтобы cookie применилась
     driver.refresh()
+
+    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".user-profile__username")))
 
     # сохранить текущий url
     url_user2 = driver.current_url
