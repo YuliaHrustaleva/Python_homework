@@ -1,6 +1,6 @@
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from lesson_07.pages.base_page import BasePage
+
 
 class ShopPage(BasePage):
     # Локаторы авторизации
@@ -64,9 +64,3 @@ class ShopPage(BasePage):
 
     def is_complete_page_displayed(self):
         return self.wait_for_presence(self.COMPLETE_HEADER).is_displayed()
-
-
-
-
-
-

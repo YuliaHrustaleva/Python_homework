@@ -11,12 +11,3 @@ def test_calculate(calc_driver):
 
     result = page.get_result()
     assert result == "15"
-
-
-
-
-
-
-
-
-
