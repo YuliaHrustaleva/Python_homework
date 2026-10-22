@@ -1,4 +1,4 @@
-from lesson_07.pages.shop_page import ShopPage
+from pages.shop_page import ShopPage
 
 
 def test_shopping(shop_driver):

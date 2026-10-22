@@ -1,4 +1,4 @@
-from lesson_07.pages.calc_page import CalcPage
+from pages.calc_page import CalcPage
 
 
 def test_calculate(calc_driver):
