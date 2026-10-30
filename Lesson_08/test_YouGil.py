@@ -57,7 +57,7 @@ def test_positive_create_project(api_headers):
     assert resp.status_code == 201, f"Ожидался 201, получен {resp.status_code}"
     data = resp.json()
     assert data.get("id") is not None
-    print(unique_title)
+
 
     # Удаление созданного проекта
     created_id = data["id"]
@@ -110,7 +110,7 @@ def test_positive_change_project(api_headers, project_id):
     data = get_resp.json()
     assert data["title"] == new_title
     assert data["id"] == project_id
-    print(data)
+
 
 
 # Негативный тест: попытка изменить проект с невалидным id
@@ -142,7 +142,7 @@ def test_positive_get_project_id(api_headers, project_id):
     data = resp.json()
     assert data["id"] == project_id
     assert data.get("title") is not None
-    print(data)
+
 
 
 # Негативный тест: запрос без указания ключа авторизации
