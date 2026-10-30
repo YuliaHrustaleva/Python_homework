@@ -4,14 +4,14 @@
 
 
 Чтобы настроить конфигурацию локально:
-
 1. В папке `Lesson_08` найдите шаблон файла конфигурации `.env.example.
 2. Переименуйте его (или создайте его копию) с именем `.env`. 
 3. Откройте созданный файл `.env` и подставьте ваши реальные данные:
+   * `YOUGILE_BASE_URL` — базовый URL API YouGile.
    * `YOUGILE_TOKEN` — ваш персональный ключ API YouGile.
-   * `YOUGILE_VALID_PROJECT_ID` — ID существующего проекта для позитивных проверок.
+ 
 
 Пример заполнения файла `.env`:
   -ini-
-YOUGILE_BASE_URL=https://yougile.com
+YOUGILE_BASE_URL=https://yougile.com/api-v2
 YOUGILE_TOKEN=ваш_настоящий_токен_от_аккаунта

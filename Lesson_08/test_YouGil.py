@@ -57,6 +57,15 @@ def test_positive_create_project(api_headers):
     assert resp.status_code == 201, f"Ожидался 201, получен {resp.status_code}"
     data = resp.json()
     assert data.get("id") is not None
+    print(unique_title)
+
+    # Удаление созданного проекта
+    created_id = data["id"]
+    requests.put(
+        f"{BASE_URL}/projects/{created_id}",
+        headers=api_headers,
+        json={"deleted": True}
+    )
 
 
 # Негативный тест: создание проекта без обязательного поля title.
@@ -70,14 +79,16 @@ def test_negative_create_project_not_title(api_headers):
         headers=api_headers,
         json=payload,
     )
-    assert resp.status_code == 401, (f"Ожидалась ошибка 401, "
+    assert resp.status_code == 400, (f"Ожидалась ошибка 400, "
                                      f"получен статус {resp.status_code}")
+
     error_body = resp.json()
+
     error_text = str(error_body).lower()
-    assert ("title" in error_text and (
-        "required" in error_text or "обязательное" in error_text)), (
-        "В ответе нет ожидаемого сообщения об ошибке для title"
-    )
+    assert "title" in error_text, \
+        "В ответе об ошибке не упоминается поле title"
+    assert ("required" in error_text or "обязательное" in error_text
+            ), "В ответе нет указания, что поле обязательно"
 
 
 # Позитивный тест: изменение проекта с валидным id.
@@ -89,6 +100,7 @@ def test_positive_change_project(api_headers, project_id):
         headers=api_headers, json=payload,
     )
     assert resp.status_code == 200, f"Ожидался 200, получен {resp.status_code}"
+
     # Проверка, что title изменился
     get_resp = requests.get(
         url=f"{BASE_URL}/projects/{project_id}",
@@ -98,6 +110,7 @@ def test_positive_change_project(api_headers, project_id):
     data = get_resp.json()
     assert data["title"] == new_title
     assert data["id"] == project_id
+    print(data)
 
 
 # Негативный тест: попытка изменить проект с невалидным id
@@ -111,6 +124,14 @@ def test_negative_change_project_invalid_id(api_headers):
     )
     assert resp.status_code == 404, f"Ожидался 404, получен {resp.status_code}"
 
+    error_body = resp.json()
+
+    error_text = str(error_body).lower()
+    assert (
+        "not found" in error_text or "не найден" in error_text
+        or "not exist" in error_text
+    ), "В ответе нет сообщения о том, что ресурс не найден"
+
 
 # Позитивный тест: получение проекта по валидному id
 def test_positive_get_project_id(api_headers, project_id):
@@ -121,6 +142,7 @@ def test_positive_get_project_id(api_headers, project_id):
     data = resp.json()
     assert data["id"] == project_id
     assert data.get("title") is not None
+    print(data)
 
 
 # Негативный тест: запрос без указания ключа авторизации
@@ -135,3 +157,9 @@ def test_negative_get_project_unauthorized(project_id):
         headers=headers,
     )
     assert resp.status_code == 401, f"Ожидался 401, получен {resp.status_code}"
+    error_body = resp.json()
+    error_text = str(error_body).lower()
+    assert (
+        "unauthorized" in error_text or "не авторизован"
+        in error_text or "invalid token" in error_text
+    ), "В ответе нет сообщения об ошибке авторизации"
