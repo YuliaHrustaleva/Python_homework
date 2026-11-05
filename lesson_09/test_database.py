@@ -6,14 +6,14 @@ db_connection_string = (
 db = create_engine(db_connection_string)
 
 
-# фикстура для создания таблицы
+# создание таблицы
 def prepare_clean_table():
     with db.connect() as connection:
         connection.execute(text(
             "CREATE TABLE IF NOT EXISTS students ("
             "id SERIAL PRIMARY KEY, name VARCHAR(50));"))
         connection.execute(text("TRUNCATE TABLE students RESTART IDENTITY;"))
-        connection.commit()  # Обязательно сохраняем изменения
+        connection.commit()
 
 
 # добавление студента
